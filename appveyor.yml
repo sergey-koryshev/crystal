@@ -1,0 +1,10 @@
+version: 0.0.{build}
+image: Visual Studio 2017
+platform: Any CPU
+clone_folder: C:\projects\
+branches:
+  only:
+  - Master
+build:
+  project: RLE.sln
+  verbosity: minimal
