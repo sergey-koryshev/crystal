@@ -6,5 +6,5 @@ branches:
   only:
   - Master
 build:
-  project: RLE.sln
+  project: Crystal.sln
   verbosity: minimal
