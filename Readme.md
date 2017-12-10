@@ -4,7 +4,7 @@
 This program is a concept of tool for games translation. I have a view at what this program will be like. But at now I am not ready to say something about this product. Aims and capabilities of it will be defined later.
 
 ## Structure of Program
-[\img\StructureOfProject.png]
+![Structure of Program](/img/StructureOfProject.png);
 
 ## What to add
 ### Pre-build
