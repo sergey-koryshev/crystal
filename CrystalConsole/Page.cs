@@ -8,5 +8,20 @@ namespace CrystalConsole
 {
     class Page
     {
+        public string Name { get; }
+
+        private List<Paragraph> Paragraphs = new List<Paragraph> { };
+
+        public Page() { }
+
+        public Page(string name)
+        {
+            Name = name;
+        }
+
+        public void AddParagraph(string name, int _originalOffset, int[] _originalPointer)
+        {
+            Paragraphs.Add(new Paragraph(name, _originalOffset, _originalPointer));
+        }
     }
 }

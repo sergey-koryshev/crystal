@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalConsole", "CrystalConsole\CrystalConsole.csproj", "{7C9974F5-B1D4-4982-96C7-D5504E137F03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pointer_GB", "Pointer_GB\Pointer_GB.csproj", "{CCDB1BF5-8A4E-489A-88B5-261C365F26B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7C9974F5-B1D4-4982-96C7-D5504E137F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C9974F5-B1D4-4982-96C7-D5504E137F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C9974F5-B1D4-4982-96C7-D5504E137F03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCDB1BF5-8A4E-489A-88B5-261C365F26B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCDB1BF5-8A4E-489A-88B5-261C365F26B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCDB1BF5-8A4E-489A-88B5-261C365F26B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCDB1BF5-8A4E-489A-88B5-261C365F26B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

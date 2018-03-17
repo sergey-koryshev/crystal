@@ -8,5 +8,49 @@ namespace CrystalConsole
 {
     class Paragraph
     {
+        public string Name { get; }
+        private Pointer OriginalPointer;
+
+        private Pointer NewPointer;
+
+        private int originalOffset;
+
+        private int newOffset;
+
+        public Paragraph() { }
+
+        public Paragraph(string name, int _originalOffset, int[] _originalPointer)
+        {
+            Name = name;
+            OriginalOffset = _originalOffset;
+            OriginalPointer = new Pointer(_originalPointer);
+        }
+
+        public int OriginalOffset
+        {
+            get { return originalOffset; }
+            set { originalOffset = value; }
+        }
+
+        public int NewOffset
+        {
+            get { return newOffset; }
+            set { newOffset = value; }
+        }
+
+        public void SetNewPointer(int[] values) 
+        {
+            NewPointer = new Pointer(values);
+        }
+
+        public Pointer GetOriginalPointer()
+        {
+            return OriginalPointer;
+        }
+
+        public Pointer GetNewPointer()
+        {
+            return NewPointer;
+        }
     }
 }
