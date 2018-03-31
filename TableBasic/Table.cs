@@ -74,7 +74,7 @@ namespace Testing
         }
 
         /// <summary>
-        /// Gets Value from table according to Char
+        /// Gets digital value from table according to Char
         /// </summary>
         /// <param name="_char"></param>
         /// <returns></returns>
