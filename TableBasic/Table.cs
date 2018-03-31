@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Interfaces;
 
-namespace Table
+namespace Testing
 {
     public class Table : ITable
     {
@@ -42,7 +43,7 @@ namespace Table
                     while ((line = fileOpen.ReadLine()) != null)
                     {
                         parsedLine = line.Split(new char[] { '=' }, 2);
-                        table.Add(int.Parse(parsedLine[0], System.Globalization.NumberStyles.HexNumber), parsedLine[1]);
+                        table.Add(Convert.ToInt32(parsedLine[0], 16), parsedLine[1]);
                     }
                 }
             }
@@ -57,7 +58,7 @@ namespace Table
         /// </summary>
         /// <param name="_value"></param>
         /// <returns></returns>
-        public string GetChar(int _value)
+        public string GetValue(int _value)
         {
             string result;
 
@@ -83,7 +84,7 @@ namespace Table
 
             if (table.ContainsValue(_char))
             {
-                result = table.FirstOrDefault(x => x.Value == _char).Key;
+                result = table.FirstOrDefault(item => item.Value == _char).Key;
             }
 
             return result;
