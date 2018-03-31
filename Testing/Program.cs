@@ -4,31 +4,75 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using Interfaces;
+using System.IO;
 
 namespace Testing
 {
-    interface ITable
+    static class TablePlugins
     {
-        string Name { get; }
+        public static void Check(string pathToFolder)
+        {
+            try
+            {
+                string[] files;
 
-        string GetChar(int _value);
+                files = Directory.GetFiles(pathToFolder, "*.dll");
 
-        int? GetValue(string _char);
+                foreach (string file in files)
+                {
+                    Assembly dll = Assembly.LoadFrom(file);
+
+                    foreach (Type type in dll.GetTypes())
+                    {
+                        foreach (Type iType in type.GetInterfaces())
+                        {
+                            if (iType.Name == typeof(ITable).Name)
+                            {
+                                Console.WriteLine(type.Name);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 
     class Program
     {
         static void Main(string[] args)
         {
-            string path = @"E:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl";
+            string path = @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl";
 
-            Assembly asm = Assembly.LoadFrom(@"E:\Programming\Crystal\TableBasic\bin\Debug\TableBasic.dll");
+            Assembly a = Assembly.LoadFrom(@"D:\Repositories\Crystal\TableBasic\bin\Debug\TableBasic.dll");
 
-            Type type = asm.GetType("Table.Table");
+            Type someType = null;
+            foreach (Type t in a.GetTypes())
+            {
+                foreach (Type iT in t.GetInterfaces())
+                {
+                    if (iT == typeof(ITable))
+                    {
+                        someType = t;
+                        break;
+                    }
+                }
+                if (someType != null)
+                {
+                    break;
+                }
+            }
+            if (someType == null)
+            {
+                throw new Exception();
+            }
+            ITable obj = (ITable)Activator.CreateInstance(someType, path);
 
-            ITable instance = (ITable)Activator.CreateInstance(type, path);
-
-            Console.WriteLine(instance.GetChar(0x0b));
+            Console.WriteLine(string.Format("{0:x}", obj.GetValue("k")));
 
             Console.ReadLine();
         }
