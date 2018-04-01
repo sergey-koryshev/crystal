@@ -8,10 +8,13 @@ namespace Interfaces
 {
     public interface ITable
     {
+        string ToString(List<int> _intArray);
+
+        List<int> ToHex(string _stringArray);
+    }
+
+    public interface IName
+    {
         string Name { get; }
-
-        string GetValue(int _value);
-
-        int? GetValue(string _char);
     }
 }
