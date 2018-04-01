@@ -17,4 +17,17 @@ namespace Interfaces
     {
         string Name { get; }
     }
+
+    public interface IAbout
+    {
+        string Author { get; }
+
+        string Description { get; }
+
+        string Date { get; }
+
+        string Link { get; }
+
+        void About();
+    }
 }
