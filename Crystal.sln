@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{47BFCBB8-3A70-414D-8CA9-3988DA54CC8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalGUI", "CrystalGUI\CrystalGUI.csproj", "{6513C642-039A-447D-894E-C100C63B9623}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{47BFCBB8-3A70-414D-8CA9-3988DA54CC8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47BFCBB8-3A70-414D-8CA9-3988DA54CC8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47BFCBB8-3A70-414D-8CA9-3988DA54CC8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6513C642-039A-447D-894E-C100C63B9623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6513C642-039A-447D-894E-C100C63B9623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6513C642-039A-447D-894E-C100C63B9623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6513C642-039A-447D-894E-C100C63B9623}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
