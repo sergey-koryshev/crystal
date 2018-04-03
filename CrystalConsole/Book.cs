@@ -8,13 +8,19 @@ namespace CrystalConsole
 {
     class Book
     {
-        public string Name { get; }
+        private string Name { get; }
 
         public string OriginalRom { get; }
 
         public string TranslatedRom { get; }
 
-        public List<Page> Pages = new List<Page> { };
+        public List<Page> pages = new List<Page> { };
+
+        public List<string> tablePlugins = new List<string>();
+
+        public List<string> pointerPlugins = new List<string>();
+
+        public List<string> storeMethodPlugins = new List<string>();
 
         public Book() { }
 
@@ -27,7 +33,7 @@ namespace CrystalConsole
 
         public void AddPage(string _name)
         {
-            Pages.Add(new Page(_name));
+            pages.Add(new Page(_name));
         }
     }
 }

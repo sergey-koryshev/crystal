@@ -9,13 +9,16 @@ namespace CrystalConsole
     class Paragraph
     {
         public string Name { get; }
-        private Pointer OriginalPointer;
 
-        private Pointer NewPointer;
+        public Pointer OriginalPointer;
 
-        private int originalOffset;
+        public Pointer NewPointer;
 
-        private int newOffset;
+        public int originalOffset;
+
+        public int newOffset;
+
+
 
         public Paragraph() { }
 

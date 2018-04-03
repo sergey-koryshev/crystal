@@ -16,7 +16,7 @@ namespace CrystalConsole
             Book mainBook = new Book ("Castlevania: Legends (GBC)", originalRom, translatedRom);
 
             mainBook.AddPage("Dialogs");
-            mainBook.Pages[0].AddParagraph("Alucard and Sonia (before the fight)", 0x24cb9, );
+            //mainBook.Pages[0].AddParagraph("Alucard and Sonia (before the fight)", 0x24cb9);
         }
     }
 }

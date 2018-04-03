@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CrystalConsole
 {
-    class Page
+    class Page : Book
     {
-        public string Name { get; }
+        private string Name { get; }
 
         private List<Paragraph> Paragraphs = new List<Paragraph> { };
 
