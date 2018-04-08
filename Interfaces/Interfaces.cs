@@ -8,26 +8,43 @@ namespace Interfaces
 {
     public interface ITable
     {
-        string ToString(List<int> _intArray);
+        string ToString(List<byte> _intArray);
 
-        List<int> ToHex(string _stringArray);
-    }
-
-    public interface IName
-    {
-        string Name { get; }
+        List<byte> ToHex(string _stringArray);
     }
 
     public interface IAbout
     {
-        string Author { get; }
-
         string Description { get; }
+
+        string Name { get; }
+
+        string Author { get; }
 
         string Date { get; }
 
         string Link { get; }
 
+        bool IsDefault { get; }
+
         void About();
+    }
+
+    public interface IPointer
+    {
+        string Parameters { get; }
+
+        int GiveOffset();
+
+        int GivePointer();
+    }
+
+    public interface IStoreMethod
+    {
+        string Parameters { get; }
+
+        List<byte> GetSequence(int offset, string _pathToROM);
+
+        void SetSequence(int offset, string _pathToROM, List<byte> sequence);
     }
 }
