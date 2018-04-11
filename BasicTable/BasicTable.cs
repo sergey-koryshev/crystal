@@ -30,7 +30,7 @@ namespace BasicTable
             {
                 Name = "Basic Table";
                 Description = "This is plugin for parsing basic table: XX=V";
-                Author = "Koryshev Sergey";
+                Author = "Sergey Koryshev";
                 Date = "April, 2018";
                 Link = string.Empty;
                 IsDefault = true;
@@ -81,9 +81,14 @@ namespace BasicTable
             {
                 byte? result = null;
 
-                if (table.ContainsValue(_char))
+                try
                 {
-                    result = table.FirstOrDefault(item => item.Value == _char).Key;
+                    result = table.First(item =>
+                        item.Value.IndexOf(_char) == 0).Key;
+                }
+                catch
+                {
+                    return null;
                 }
 
                 return result;
@@ -107,17 +112,71 @@ namespace BasicTable
 
                 byte value;
 
-                foreach (char letter in _stringArray)
-                {
-                    if (GetValue(letter.ToString()) != null)
-                    {
-                        value = GetValue(letter.ToString()) ?? default(byte);
+                int i = 0;
 
-                        result.Add(value);
+                string seekingValue = string.Empty;
+                string hexValue = string.Empty;
+                bool found;
+
+                while (i < _stringArray.Length)
+                {
+                    seekingValue = string.Empty;
+                    hexValue = string.Empty;
+                    found = true;
+
+                    switch (_stringArray[i])
+                    {
+                        case '[':
+                            i++;
+                            do
+                            {
+                                hexValue += _stringArray[i];
+                                i++;
+                            } while (_stringArray[i] != ']');
+                            i++;
+                            break;
+                        case '{':
+                            do
+                            {
+                                seekingValue += _stringArray[i];
+                                i++;
+                            } while (_stringArray[i] != '}');
+                            seekingValue += _stringArray[i];
+                            i++;
+                            break;
+                        default:
+                            seekingValue = _stringArray[i].ToString();
+                            while (found && (i + 1 < _stringArray.Length))
+                            {
+                                if (GetValue(seekingValue + _stringArray[i + 1].ToString()) != null)
+                                {
+                                    i++;
+                                    seekingValue += _stringArray[i].ToString();
+                                }
+                                else
+                                {
+                                    found = false;
+                                }
+                            }
+                            i++;
+                            break;
+                    }
+                    if (seekingValue != string.Empty)
+                    {
+                        if (GetValue(seekingValue) != null)
+                        {
+                            value = GetValue(seekingValue) ?? default(byte);
+                            result.Add(value);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Character '{0}' has not found in table.", seekingValue);
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Character '{0}' has not found in table.", letter);
+                        value = Convert.ToByte(hexValue, 16);
+                        result.Add(value);
                     }
                 }
 
