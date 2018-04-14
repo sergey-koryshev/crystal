@@ -9,7 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicTable", "BasicTable\BasicTable.csproj", "{8840DE3B-C39E-429E-9864-E6BD0E2B06BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicStoreMethod", "BasicStoreMethod\BasicStoreMethod.csproj", "{729B577D-BC3A-4A84-8CAB-54135209752B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopByte", "BasicStoreMethod\StopByte.csproj", "{729B577D-BC3A-4A84-8CAB-54135209752B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalGUI", "CrystalGUI\CrystalGUI.csproj", "{A29A86DC-47CE-4C47-AC85-5584B629B811}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalDemo", "CrystalDemo\CrystalDemo.csproj", "{5727E929-1883-4E8A-9DBD-E22DAC315D24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{729B577D-BC3A-4A84-8CAB-54135209752B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{729B577D-BC3A-4A84-8CAB-54135209752B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{729B577D-BC3A-4A84-8CAB-54135209752B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A29A86DC-47CE-4C47-AC85-5584B629B811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A29A86DC-47CE-4C47-AC85-5584B629B811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A29A86DC-47CE-4C47-AC85-5584B629B811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A29A86DC-47CE-4C47-AC85-5584B629B811}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5727E929-1883-4E8A-9DBD-E22DAC315D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5727E929-1883-4E8A-9DBD-E22DAC315D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5727E929-1883-4E8A-9DBD-E22DAC315D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5727E929-1883-4E8A-9DBD-E22DAC315D24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
