@@ -68,6 +68,10 @@ namespace BasicTable
                 if (table.ContainsKey(_value))
                 {
                     result = table[_value];
+                    if ((result == "{enter}") || (result == "{end line}"))
+                    {
+                        result += "\n";
+                    }
                 }
                 else
                 {
