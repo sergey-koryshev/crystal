@@ -9,59 +9,65 @@ namespace Crystal
 {
     class Book
     {
-        private string Name { get; }
-
-        public string OriginalROMPath { get; }
-
-        public string TranslatedROMPath { get; }
+        public string BookName { get; }
 
         public List<Page> pages = new List<Page> { };
 
-        static public LoadedPlugins loadedPlugins;
-
         public Book() { }
 
-        public Book(string _name, string _originalROMPath, string _traslatedROMPath)
+        public Book(string _name,
+            string _originalROMPath,
+            string _traslatedROMPath
+            )
         {
-            Name = _name;
-            OriginalROMPath = _originalROMPath;
-            TranslatedROMPath = _traslatedROMPath;
-            loadedPlugins = new LoadedPlugins();
+            BookName = _name;
         }
 
-        public void AddPage(string _name, string _originalTablePath, string _russianTablePath, string _pointerPluginName, string _tablePluginName, string _storeMethodPluginName, string _storeMethodPluginParameters)
+        public void AddPage(string _name,
+            string _originalTablePath,
+            string _newTablePath,
+            string _pointerPluginName,
+            string _pointerPluginNameParameters,
+            string _tablePluginName,
+            string _storeMethodPluginName,
+            string _storeMethodPluginParameters
+            )
         {
-            pages.Add(new Page(_name, _originalTablePath, _russianTablePath, _pointerPluginName, _tablePluginName, _storeMethodPluginName, _storeMethodPluginParameters));
+            IPointer pointer = null;
+
+            ITable originalTable = (ITable)Plugins
+                .Load(Program.settings.TablePluginList[_tablePluginName], typeof(ITable), new string[] { _originalTablePath });
+
+            ITable newTable = (ITable)Plugins
+                .Load(Program.settings.TablePluginList[_tablePluginName], typeof(ITable), new string[] { _newTablePath });
+
+            IStoreMethod storeMethod = (IStoreMethod)Plugins
+                .Load(Program.settings.StorePluginList[_storeMethodPluginName], typeof(IStoreMethod), new string[] { _storeMethodPluginParameters });
+
+            pages.Add(new Page(_name, pointer, storeMethod, originalTable, newTable));
         }
 
-        public List<byte> ExportBytes(int _pageID, int _paragraphID)
+        public string ExportText(int _pageID,
+            int _paragraphID
+            )
         {
-            List<byte> result;
-
-            result = pages[_pageID].storeMethod.GetSequence(pages[_pageID].paragraphs[_paragraphID].OriginalTextOffset, OriginalROMPath);
-
+            string result = string.Empty;
+            pages[_pageID].UpdateOriginalText(_paragraphID);
+            result = pages[_pageID].paragraphs[_paragraphID].OriginalText;
             return result;
         }
 
-        public string ExportText(int _pageID, int _paragraphID)
+        public void SetNewText(int _pageID,
+            int _paragraphID,
+            string _text
+            )
         {
-            string result;
-
-            List<byte> bytes = ExportBytes(_pageID, _paragraphID);
-
-            result = pages[_pageID].table.ToString(bytes);
-
-            return result;
+            pages[_pageID].SetText(_paragraphID, _text);
         }
 
-        public void ImportText(int _pageID, int _paragraphID)
+        public void ImportText(int _pageID, int _paragraphID, string _text)
         {
-
-        }
-
-        public void ImportBytes(int _pageID, int _paragraphID)
-        {
-
+            pages[_pageID].InsertText(_paragraphID, _text);
         }
     }
 }

@@ -7,9 +7,13 @@ using Interfaces;
 
 namespace Crystal
 {
-    class LoadedPlugins
+    class Settings
     {
-        string PluginsFolder { get; }
+        string PluginsFolder { set; get; }
+
+        public string OriginalROMPath { set; get; }
+
+        public string TraslatedROMPath { set; get; }
 
         public Dictionary<string, string> TablePluginList = new Dictionary<string, string>();
 
@@ -17,9 +21,13 @@ namespace Crystal
 
         public Dictionary<string, string> StorePluginList = new Dictionary<string, string>();
 
-        public LoadedPlugins()
+        public Settings()
         {
-            PluginsFolder = @"D:\Repositories\CrystalDup\Plugins";
+            PluginsFolder = @"D:\Repositories\Crystal\Plugins";
+
+            OriginalROMPath = @"D:\1.gb";
+
+            TraslatedROMPath = @"D:\1.gb";
 
             TablePluginList = Plugins.Check(PluginsFolder, typeof(ITable));
 

@@ -6,38 +6,50 @@ using System.Threading.Tasks;
 
 namespace Crystal
 {
-    class Paragraph : Page
+    class Paragraph
     {
-        private string Name { get; }
+        public string ParagraphName { get; }
 
         public Pointer originalPointer;
 
         public Pointer newPointer;
 
-        public int originalTextOffset;
+        public int OriginalTextOffset { set; get; }
 
-        public int newTextOffset;
+        public int NewTextOffset { set; get; }
+
+        public string OriginalText { set; get; }
+
+        public string NewText { set; get; }
+
+        public List<byte> OriginalBytes { set; get; }
+
+        public List<byte> NewBytes { set; get; }
+
+        public int originalSize;
+
+        public int newSize;
 
         public Paragraph() { }
 
         public Paragraph(string _name, int _originaTextlOffset, int _originalPointerOffset)
         {
-            Name = _name;
+            ParagraphName = _name;
             OriginalTextOffset = _originaTextlOffset;
             originalPointer = new Pointer(_originalPointerOffset, 2);
+
         }
 
-        public int OriginalTextOffset
+        public int OriginalSize
         {
-            get { return originalTextOffset; }
-            set { originalTextOffset = value; }
+            get { return OriginalBytes.Count; }
         }
 
-        public int NewTextOffset
+        public int NewSize
         {
-            get { return newTextOffset; }
-            set { newTextOffset = value; }
+            get { return NewBytes.Count; }
         }
+
         //public Pointer NewPointer { }
     }
 }
