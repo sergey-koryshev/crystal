@@ -43,8 +43,8 @@ namespace Interfaces
     {
         string Parameters { get; }
 
-        List<byte> GetSequence(int offset, string _pathToROM);
+        List<byte> GetBytes(int offset, string _pathToROM);
 
-        void SetSequence(int offset, string _pathToROM, List<byte> sequence);
+        void InsertBytes(int offset, string _pathToROM, List<byte> sequence);
     }
 }
