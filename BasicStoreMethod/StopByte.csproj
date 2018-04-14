@@ -7,8 +7,8 @@
     <ProjectGuid>{729B577D-BC3A-4A84-8CAB-54135209752B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BasicStoreMethod</RootNamespace>
-    <AssemblyName>BasicStoreMethod</AssemblyName>
+    <RootNamespace>StopByte</RootNamespace>
+    <AssemblyName>StopByte</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

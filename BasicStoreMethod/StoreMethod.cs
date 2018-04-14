@@ -42,7 +42,7 @@ namespace BasicStoreMethod
             stopByte = byte.Parse(_parameters);
         }
 
-        public List<byte> GetSequence(int _offset, string _pathToROM)
+        public List<byte> GetBytes(int _offset, string _pathToROM)
         {
             List<byte> result = new List<byte>();
             byte currentByte;
@@ -57,7 +57,7 @@ namespace BasicStoreMethod
             return result;
         }
 
-        public void SetSequence(int _offset, string _pathToROM, List<byte> sequence)
+        public void InsertBytes(int _offset, string _pathToROM, List<byte> sequence)
         {
             BinaryWriter file = new BinaryWriter(File.Open(_pathToROM, FileMode.Open));
             file.BaseStream.Seek(_offset, SeekOrigin.Begin);
