@@ -15,10 +15,7 @@ namespace Crystal
 
         public Book() { }
 
-        public Book(string _name,
-            string _originalROMPath,
-            string _traslatedROMPath
-            )
+        public Book(string _name)
         {
             BookName = _name;
         }
