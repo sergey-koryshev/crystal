@@ -21,8 +21,8 @@ namespace Crystal
         {
             Program.settings = new Settings();
 
-            string originalRom = @"D:\1.gb";
-            string translatedRom = @"E:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Original_rom\Castlevania - Legends (UE) [S][!][RUS].gb";
+            string originalRom = @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Original_rom\Castlevania - Legends (UE) [S][!].gb";
+            string translatedRom = @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Original_rom\Castlevania - Legends (UE) [S][!][RUS].gb";
 
             Program.book = new Book("Castlevania: Legends (GBC)", originalRom, translatedRom);
             Program.book.AddPage("Dialogs (Stop-Byte)", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", "", "", "Basic Table", "Stop-Byte Store Method", "255");
@@ -74,6 +74,11 @@ namespace Crystal
             string text = richTextBox2.Text;
 
             Program.book.ImportText(treeView1.SelectedNode.Parent.Index, treeView1.SelectedNode.Index, text);
+        }
+
+        private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

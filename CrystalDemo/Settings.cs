@@ -25,9 +25,9 @@ namespace Crystal
         {
             PluginsFolder = @"D:\Repositories\Crystal\Plugins";
 
-            OriginalROMPath = @"D:\1.gb";
+            OriginalROMPath = @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Original_rom\Castlevania - Legends (UE) [S][!].gb";
 
-            TraslatedROMPath = @"D:\1.gb";
+            TraslatedROMPath = @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Original_rom\Castlevania - Legends (UE) [S][!].gb";
 
             TablePluginList = Plugins.Check(PluginsFolder, typeof(ITable));
 
