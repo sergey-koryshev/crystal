@@ -11,25 +11,27 @@ using System.Windows.Forms;
 
 namespace Crystal
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void frmMain_Load(object sender, EventArgs e)
         {
             Program.settings = new Settings();
 
             Program.book = new Book("Castlevania: Legends (GBC)");
+
             Program.book.AddPage("Dialogs", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", "", "", "Basic Table", "Stop-Byte Store Method", "255");
             Program.book.pages[0].AddParagraph("Alucard and Sonia (before the fight)", 0x24cb9, 0x24524);
             Program.book.pages[0].AddParagraph("Alucard and Sonia (after the fight)", 0x2516f, 0x24553);
             Program.book.pages[0].AddParagraph("Dracula (before the first form)", 0x2536A, 0x24582);
             Program.book.pages[0].AddParagraph("Dracula (before the second form)", 0x2570B, 0x245B1);
             Program.book.pages[0].AddParagraph("Dracual (after the fight)", 0x25C4D, 0x245E0);
-            Program.book.AddPage("History", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen.tbl", "", "", "Basic Table", "Tile-Map Store Method", "20;80");
+
+            Program.book.AddPage("History", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen.tbl", "", "", "Basic Table", "Tile-Map Store Method", "20;20");
             Program.book.pages[1].AddParagraph("History", 0x6292, 0x1661);
 
             TreeNode addingBook = new TreeNode(Program.book.BookName);
@@ -50,7 +52,7 @@ namespace Crystal
             }
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void treeProject_AfterSelect(object sender, TreeViewEventArgs e)
         {
             txtOriginal.Clear();
             txtOriginalSize.Clear();
@@ -75,7 +77,7 @@ namespace Crystal
         private void button1_Click(object sender, EventArgs e)
         {
             StringBuilder text = new StringBuilder(Regex.Replace(txtNew.Text, @"·", " "));
-
+            
             Program.book.ImportText(treeProject.SelectedNode.Parent.Index, treeProject.SelectedNode.Index, text.ToString());
         }
 
@@ -84,7 +86,7 @@ namespace Crystal
 
         }
 
-        private void richTextBox1_MouseMove(object sender, MouseEventArgs e)
+        private void txtOriginal_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -92,7 +94,7 @@ namespace Crystal
             }
         }
 
-        private void richTextBox1_KeyUp(object sender, KeyEventArgs e)
+        private void txtOriginal_KeyUp(object sender, KeyEventArgs e)
         {
             txtLength.Text = AmountLetters(txtOriginal.SelectedText).ToString();
         }
@@ -101,7 +103,7 @@ namespace Crystal
         {
             int result = 0;
             int i = 0;
-            string text = Regex.Replace(_text, @"\n+", "");
+            StringBuilder text = new StringBuilder(Regex.Replace(_text, @"\n+", ""));
 
             while (i < text.Length)
             {
@@ -135,11 +137,10 @@ namespace Crystal
                         break;
                 }
             }
-
             return result;
         }
 
-        private void richTextBox1_MouseUp(object sender, MouseEventArgs e)
+        private void txtOriginal_MouseUp(object sender, MouseEventArgs e)
         {
             txtLength.Text = AmountLetters(txtOriginal.SelectedText).ToString();
         }

@@ -1,6 +1,6 @@
 ﻿namespace Crystal
 {
-    partial class Form1
+    partial class frmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -137,7 +137,7 @@
             this.treeProject.Name = "treeProject";
             this.treeProject.Size = new System.Drawing.Size(188, 185);
             this.treeProject.TabIndex = 1;
-            this.treeProject.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeProject.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeProject_AfterSelect);
             // 
             // groupBox2
             // 
@@ -179,7 +179,6 @@
             this.txtOriginal.CharWidth = 8;
             this.txtOriginal.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtOriginal.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.txtOriginal.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.txtOriginal.IsReplaceMode = false;
             this.txtOriginal.Location = new System.Drawing.Point(7, 19);
             this.txtOriginal.Name = "txtOriginal";
@@ -192,9 +191,9 @@
             this.txtOriginal.Zoom = 100;
             this.txtOriginal.TextChanging += new System.EventHandler<FastColoredTextBoxNS.TextChangingEventArgs>(this.txtOriginal_TextChanging);
             this.txtOriginal.Load += new System.EventHandler(this.txtOriginal_Load);
-            this.txtOriginal.KeyUp += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyUp);
-            this.txtOriginal.MouseMove += new System.Windows.Forms.MouseEventHandler(this.richTextBox1_MouseMove);
-            this.txtOriginal.MouseUp += new System.Windows.Forms.MouseEventHandler(this.richTextBox1_MouseUp);
+            this.txtOriginal.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtOriginal_KeyUp);
+            this.txtOriginal.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtOriginal_MouseMove);
+            this.txtOriginal.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtOriginal_MouseUp);
             // 
             // txtNew
             // 
@@ -216,6 +215,7 @@
             this.txtNew.CharWidth = 8;
             this.txtNew.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtNew.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.txtNew.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.txtNew.IsReplaceMode = false;
             this.txtNew.Location = new System.Drawing.Point(7, 183);
             this.txtNew.Name = "txtNew";
@@ -310,7 +310,7 @@
             this.txtOriginalSize.Size = new System.Drawing.Size(141, 20);
             this.txtOriginalSize.TabIndex = 8;
             // 
-            // Form1
+            // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -322,9 +322,9 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Name = "frmMain";
+            this.Text = "Crystal Demo";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
