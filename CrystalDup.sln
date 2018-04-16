@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalDemo", "CrystalDemo\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileMapStyle", "TileMapStyle\TileMapStyle.csproj", "{F391C447-D888-4CBB-8517-FFF26D88BDB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableTileMapStyle", "TableTileMapStyle\TableTileMapStyle.csproj", "{03D1A4B9-8BFE-4B58-91CA-25F2E7813EE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{F391C447-D888-4CBB-8517-FFF26D88BDB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F391C447-D888-4CBB-8517-FFF26D88BDB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F391C447-D888-4CBB-8517-FFF26D88BDB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03D1A4B9-8BFE-4B58-91CA-25F2E7813EE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D1A4B9-8BFE-4B58-91CA-25F2E7813EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D1A4B9-8BFE-4B58-91CA-25F2E7813EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D1A4B9-8BFE-4B58-91CA-25F2E7813EE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
