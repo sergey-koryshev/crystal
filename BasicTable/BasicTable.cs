@@ -26,6 +26,8 @@ namespace BasicTable
 
             public bool IsDefault { get; }
 
+            public string Parameters { get; }
+
             public Table()
             {
                 Name = "Basic Table";
@@ -36,7 +38,7 @@ namespace BasicTable
                 IsDefault = true;
             }
 
-            public Table(string TablePath)
+            public Table(string TablePath, string _parameters)
             {
                 try
                 {

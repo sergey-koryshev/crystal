@@ -8,6 +8,8 @@ namespace Interfaces
 {
     public interface ITable
     {
+        string Parameters { get; }
+
         string ToString(List<byte> _intArray);
 
         List<byte> ToHex(string _stringArray);

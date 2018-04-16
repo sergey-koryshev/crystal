@@ -24,8 +24,9 @@ namespace Crystal
             string _originalTablePath,
             string _newTablePath,
             string _pointerPluginName,
-            string _pointerPluginNameParameters,
+            string _pointerPluginParameters,
             string _tablePluginName,
+            string _tablePluginParameters,
             string _storeMethodPluginName,
             string _storeMethodPluginParameters
             )
@@ -33,10 +34,10 @@ namespace Crystal
             IPointer pointer = null;
 
             ITable originalTable = (ITable)Plugins
-                .Load(Program.settings.TablePluginList[_tablePluginName], typeof(ITable), new string[] { _originalTablePath });
+                .Load(Program.settings.TablePluginList[_tablePluginName], typeof(ITable), new string[] { _originalTablePath, _tablePluginParameters });
 
             ITable newTable = (ITable)Plugins
-                .Load(Program.settings.TablePluginList[_tablePluginName], typeof(ITable), new string[] { _newTablePath });
+                .Load(Program.settings.TablePluginList[_tablePluginName], typeof(ITable), new string[] { _newTablePath, _tablePluginParameters });
 
             IStoreMethod storeMethod = (IStoreMethod)Plugins
                 .Load(Program.settings.StorePluginList[_storeMethodPluginName], typeof(IStoreMethod), new string[] { _storeMethodPluginParameters });
