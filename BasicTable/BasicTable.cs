@@ -44,7 +44,7 @@ namespace BasicTable
                 {
                     table = new Dictionary<byte, string>();
 
-                    using (StreamReader fileOpen = new StreamReader(TablePath, System.Text.Encoding.Default))
+                    using (StreamReader fileOpen = new StreamReader(TablePath, System.Text.Encoding.UTF8))
                     {
                         string line;
                         string[] parsedLine;
@@ -70,7 +70,7 @@ namespace BasicTable
                 if (table.ContainsKey(_value))
                 {
                     result = table[_value];
-                    if ((result == "{enter}") || (result == "{end line}"))
+                    if ((result == "{enter}") || (result == "{end line}") || (result == "{wait key}"))
                     {
                         result += "\n";
                     }
