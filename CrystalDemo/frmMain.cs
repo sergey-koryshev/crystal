@@ -24,14 +24,14 @@ namespace Crystal
 
             Program.book = new Book("Castlevania: Legends (GBC)");
 
-            Program.book.AddPage("Dialogs", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", "", "", "Basic Table", "", "Stop-Byte Store Method", "255");
+            Program.book.AddPage("Dialogs", true, @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", "", "", "Basic Table", "", "Stop-Byte Store Method", "255");
             Program.book.pages[0].AddParagraph("Alucard and Sonia (before the fight)", 0x24cb9, 0x24524);
             Program.book.pages[0].AddParagraph("Alucard and Sonia (after the fight)", 0x2516f, 0x24553);
             Program.book.pages[0].AddParagraph("Dracula (before the first form)", 0x2536A, 0x24582);
-            Program.book.pages[0].AddParagraph("Dracula (before the second form)", 0x2570B, 0x245B1);
-            Program.book.pages[0].AddParagraph("Dracual (after the fight)", 0x25C4D, 0x245E0);
+            Program.book.pages[0].AddParagraph("Dracula (after the fight)", 0x2570B, 0x245B1);
+            Program.book.pages[0].AddParagraph("Dracual (before the second form)", 0x25C4D, 0x245E0);
 
-            Program.book.AddPage("History", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen.tbl", "", "", "Tile Map Table", "20", "Tile-Map Store Method", "20;20");
+            Program.book.AddPage("History", false, @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen (rus).tbl", "", "", "Tile Map Table", "20", "Tile-Map Store Method", "20;20");
             Program.book.pages[1].AddParagraph("History", 0x6292, 0x1661);
 
             TreeNode addingBook = new TreeNode(Program.book.BookName);
@@ -55,48 +55,31 @@ namespace Crystal
         private void treeProject_AfterSelect(object sender, TreeViewEventArgs e)
         {
             txtOriginal.Clear();
-            txtOriginalSize.Clear();
-            StringBuilder text;
+            StringBuilder originalText;
+            StringBuilder newText;
             switch (treeProject.SelectedNode.Tag)
             {
                 case "Paragraph":
-                    text = new StringBuilder(Regex.Replace(Program.book.ExportText(treeProject.SelectedNode.Parent.Index, treeProject.SelectedNode.Index), @"[\s-[\r\n]]", "·"));
+                    originalText = new StringBuilder(Regex.Replace(Program.book.ExportOriginalText(treeProject.SelectedNode.Parent.Index, treeProject.SelectedNode.Index), @"[\s-[\r\n]]", "·"));
 
-                    txtOriginal.Text = text.ToString();
-                    txtOriginalSize.Text = Program.book.pages[treeProject.SelectedNode.Parent.Index].paragraphs[treeProject.SelectedNode.Index].OriginalSize.ToString();
+                    txtOriginal.Text = originalText.ToString();
+
+                    newText = new StringBuilder(Regex.Replace(Program.book.ExportNewText(treeProject.SelectedNode.Parent.Index, treeProject.SelectedNode.Index), @"[\s-[\r\n]]", "·"));
+
+                    txtNew.Text = newText.ToString();
+
+                    propertyGrid1.SelectedObject = Program.book.pages[treeProject.SelectedNode.Parent.Index].paragraphs[treeProject.SelectedNode.Index];
                     break;
                 case "Page":
-                    txtOriginalSize.Text = Program.book.pages[treeProject.SelectedNode.Index].OriginalSize.ToString();
+                    propertyGrid1.SelectedObject = Program.book.pages[treeProject.SelectedNode.Index];
+                    break;
+                case "Book":
+                    propertyGrid1.SelectedObject = Program.book;
                     break;
                 default:
                     break;
             }
 
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            StringBuilder text = new StringBuilder(Regex.Replace(txtNew.Text, @"·", " "));
-            
-            Program.book.ImportText(treeProject.SelectedNode.Parent.Index, treeProject.SelectedNode.Index, text.ToString());
-        }
-
-        private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtOriginal_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                txtLength.Text = AmountLetters(txtOriginal.SelectedText).ToString();
-            }
-        }
-
-        private void txtOriginal_KeyUp(object sender, KeyEventArgs e)
-        {
-            txtLength.Text = AmountLetters(txtOriginal.SelectedText).ToString();
         }
 
         public int AmountLetters(string _text)
@@ -140,19 +123,12 @@ namespace Crystal
             return result;
         }
 
-        private void txtOriginal_MouseUp(object sender, MouseEventArgs e)
-        {
-            txtLength.Text = AmountLetters(txtOriginal.SelectedText).ToString();
-        }
 
         private void btnImport_Click(object sender, EventArgs e)
         {
+            StringBuilder text = new StringBuilder(Regex.Replace(txtNew.Text, @"·", " "));
 
-        }
-
-        private void txtOriginal_Load(object sender, EventArgs e)
-        {
-
+            Program.book.ImportText(treeProject.SelectedNode.Parent.Index, treeProject.SelectedNode.Index, text.ToString());
         }
 
         private void txtOriginal_TextChanging(object sender, FastColoredTextBoxNS.TextChangingEventArgs e)
@@ -161,6 +137,58 @@ namespace Crystal
             {
                 e.InsertingText = "·";
             }
+        }
+
+        private void txtNew_TextChanging(object sender, FastColoredTextBoxNS.TextChangingEventArgs e)
+        {
+            if (e.InsertingText == " ")
+            {
+                e.InsertingText = "·";
+            }
+        }
+
+        private void txtOriginal_SelectionChanged(object sender, EventArgs e)
+        {
+            txtLength.Text = AmountLetters(txtOriginal.SelectedText).ToString();
+        }
+
+        private void txtNew_SelectionChanged(object sender, EventArgs e)
+        {
+            txtLength.Text = AmountLetters(txtNew.SelectedText).ToString();
+        }
+
+        private void txtNew_TextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
+        {
+            txtTextAnalizerAmount.Clear();
+            txtTextAnalizerCollection.Clear();
+
+            StringBuilder text = new StringBuilder(Regex.Replace(Regex.Replace(txtNew.Text, "·", " "), "[{].*[}]", ""));
+
+            
+
+            FrequencyAnalysis fa = new FrequencyAnalysis(text.ToString());
+
+            fa.Analise();
+
+            txtTextAnalizerAmount.Text = fa.Count.ToString();
+
+            foreach (var c in fa)
+            {
+                
+                if (c.Key == ' ')
+                {
+                    txtTextAnalizerCollection.AppendText(string.Format("пробел({0}) ", c.Value));
+                }
+                else
+                {
+                    txtTextAnalizerCollection.AppendText(string.Format("{0}({1}) ", c.Key, c.Value));
+                }
+            }
+        }
+
+        private void propertyGrid1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

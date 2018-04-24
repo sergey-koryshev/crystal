@@ -26,18 +26,22 @@ namespace Crystal
 
         public List<byte> NewBytes { set; get; }
 
-        public int originalSize;
+        public Paragraph Next { set; get; }
 
-        public int newSize;
+        public Paragraph Previous { set; get; }
 
         public Paragraph() { }
 
-        public Paragraph(string _name, int _originaTextlOffset, int _originalPointerOffset)
+        public Paragraph(string _name, int _originaTextlOffset, int _originalPointerOffset) : this(_name, _originaTextlOffset, _originalPointerOffset, _originaTextlOffset, _originalPointerOffset) { }
+
+        public Paragraph(string _name, int _originaTextlOffset, int _originalPointerOffset, int _newTextOffset, int _newPointerOffset)
         {
             ParagraphName = _name;
+            Next = null;
             OriginalTextOffset = _originaTextlOffset;
             originalPointer = new Pointer(_originalPointerOffset, 2);
-
+            NewTextOffset = (int)_newTextOffset;
+            newPointer = new Pointer((int)_newPointerOffset, 2);
         }
 
         public int OriginalSize
@@ -48,6 +52,16 @@ namespace Crystal
         public int NewSize
         {
             get { return NewBytes.Count; }
+        }
+
+        public int OriginalTextEndOffset
+        {
+            get { return OriginalTextOffset + OriginalBytes.Count - 1; }
+        }
+
+        public int NewTextEndOffset
+        {
+            get { return NewTextOffset + NewBytes.Count - 1; }
         }
 
         //public Pointer NewPointer { }

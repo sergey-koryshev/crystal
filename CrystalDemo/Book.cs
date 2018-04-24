@@ -21,6 +21,7 @@ namespace Crystal
         }
 
         public void AddPage(string _name,
+            bool _isLinked,
             string _originalTablePath,
             string _newTablePath,
             string _pointerPluginName,
@@ -42,10 +43,10 @@ namespace Crystal
             IStoreMethod storeMethod = (IStoreMethod)Plugins
                 .Load(Program.settings.StorePluginList[_storeMethodPluginName], typeof(IStoreMethod), new string[] { _storeMethodPluginParameters });
 
-            pages.Add(new Page(_name, pointer, storeMethod, originalTable, newTable));
+            pages.Add(new Page(_name, _isLinked, pointer, storeMethod, originalTable, newTable));
         }
 
-        public string ExportText(int _pageID,
+        public string ExportOriginalText(int _pageID,
             int _paragraphID
             )
         {
@@ -55,17 +56,27 @@ namespace Crystal
             return result;
         }
 
+        public string ExportNewText(int _pageID,
+            int _paragraphID
+            )
+        {
+            string result = string.Empty;
+            pages[_pageID].GetNewText(_paragraphID);
+            result = pages[_pageID].paragraphs[_paragraphID].NewText;
+            return result;
+        }
+
         public void SetNewText(int _pageID,
             int _paragraphID,
             string _text
             )
         {
-            pages[_pageID].SetText(_paragraphID, _text);
+            pages[_pageID].SetNewText(_paragraphID, _text);
         }
 
         public void ImportText(int _pageID, int _paragraphID, string _text)
         {
-            pages[_pageID].InsertText(_paragraphID, _text);
+            pages[_pageID].InsertNewText(_paragraphID, _text);
         }
     }
 }

@@ -25,15 +25,21 @@ namespace Crystal
 
         private int newSize;
 
+        public bool IsLinked {
+            get;
+            set; }
+
         public Page() { }
 
         public Page(string _name,
+            bool _isLinked,
             IPointer _pointerPlugin,
             IStoreMethod _storeMethodPlugin,
             ITable _originalTablePlugin,
             ITable _newTablePlugin)
         {
             PageName = _name;
+            IsLinked = _isLinked;
             pointer = _pointerPlugin;
             storeMethod = _storeMethodPlugin;
             originalTable = _originalTablePlugin;
@@ -45,40 +51,118 @@ namespace Crystal
             int _originalPointerOffset)
         {
             paragraphs.Add(new Paragraph(_name, _originaTextlOffset, _originalPointerOffset));
-            GetBytes(paragraphs.Count - 1);
+            GetOriginalBytes(paragraphs.Count - 1);
+            GetNewBytes(paragraphs.Count - 1);
+            if (IsLinked == true)
+            {
+                if (paragraphs.Count > 1)
+                {
+                    SetNextParagraph(paragraphs.Count - 2, paragraphs[paragraphs.Count - 1]);
+                } else
+                {
+                    SetNextParagraph(paragraphs.Count - 1, null);
+                }
+                if (paragraphs.Count - 1 != 0)
+                {
+                    SetPreviousParagraph(paragraphs.Count - 1, paragraphs[paragraphs.Count - 2]);
+                }
+            }
         }
 
-        public void GetBytes(int _paragraphID)
+        public void AddParagraph(string _name,
+            int _originaTextlOffset,
+            int _originalPointerOffset,
+            int _newTextOffset,
+            int _newPointerOffset)
+        {
+            paragraphs.Add(new Paragraph(_name, _originaTextlOffset, _originalPointerOffset, _newTextOffset, _newPointerOffset));
+            GetOriginalBytes(paragraphs.Count - 1);
+            GetNewBytes(paragraphs.Count - 1);
+            if (IsLinked == true)
+            {
+                if (paragraphs.Count > 1)
+                {
+                    SetNextParagraph(paragraphs.Count - 2, paragraphs[paragraphs.Count - 1]);
+                }
+                if (paragraphs.Count - 1 != 0)
+                {
+                    SetPreviousParagraph(paragraphs.Count - 1, paragraphs[paragraphs.Count - 2]);
+                }
+            }
+        }
+
+        public void GetOriginalBytes(int _paragraphID)
         {
             paragraphs[_paragraphID].OriginalBytes = storeMethod.GetBytes(paragraphs[_paragraphID].OriginalTextOffset, Program.settings.OriginalROMPath);
         }
 
-        public void GetText(int _paragraphID)
+        public void GetOriginalText(int _paragraphID)
         {
-            GetBytes(_paragraphID);
+            GetOriginalBytes(_paragraphID);
             paragraphs[_paragraphID].OriginalText = originalTable.ToString(paragraphs[_paragraphID].OriginalBytes);
         }
 
         public void UpdateOriginalText(int _paragraphID)
         {
-            GetText(_paragraphID);
+            GetOriginalText(_paragraphID);
         }
 
-        public void SetText(int _paragraphID, string _text)
+        public void GetNewBytes(int _paragraphID)
+        {
+            paragraphs[_paragraphID].NewBytes = storeMethod.GetBytes(paragraphs[_paragraphID].NewTextOffset, Program.settings.TraslatedROMPath);
+        }
+
+        public void GetNewText(int _paragraphID)
+        {
+            GetNewBytes(_paragraphID);
+            paragraphs[_paragraphID].NewText = newTable.ToString(paragraphs[_paragraphID].NewBytes);
+        }
+
+        public void SetNewText(int _paragraphID,
+            string _text)
         {
             paragraphs[_paragraphID].NewText = _text;
-            SetBytes(_paragraphID, _text);
+            SetNewBytes(_paragraphID, _text);
         }
 
-        public void SetBytes(int _paragraphID, string _text)
+        public void SetNewBytes(int _paragraphID,
+            string _text)
         {
             paragraphs[_paragraphID].NewBytes = newTable.ToHex(_text);
         }
 
-        public void InsertText(int _pargraphID, string _text)
+        public void InsertNewText(int _pargraphID,
+            string _text)
         {
-            SetText(_pargraphID, _text);
-            storeMethod.InsertBytes(paragraphs[_pargraphID].NewTextOffset, Program.settings.TraslatedROMPath, paragraphs[_pargraphID].NewBytes);
+            SetNewText(_pargraphID, _text);
+            if(IsLinked == false)
+            {
+                storeMethod.InsertBytes(paragraphs[_pargraphID].NewTextOffset, Program.settings.TraslatedROMPath, paragraphs[_pargraphID].NewBytes);
+            } else
+            {
+                Paragraph paragraph = paragraphs[_pargraphID];
+                do
+                {
+                    storeMethod.InsertBytes(paragraph.NewTextOffset, Program.settings.TraslatedROMPath, paragraph.NewBytes);
+                    paragraph = paragraph.Next;
+                    if (paragraph != null)
+                    {
+                        int oldNewTextOffset = paragraph.NewTextOffset;
+                        paragraph.NewTextOffset = paragraph.Previous.NewTextEndOffset + 1;
+                        paragraph.newPointer.SetPointer(Program.settings.TraslatedROMPath, oldNewTextOffset, paragraph.NewTextOffset);
+                    }
+                } while (paragraph != null);
+            }
+        }
+
+        public void SetNextParagraph(int _pargraphID, Paragraph _next)
+        {
+            paragraphs[_pargraphID].Next = _next;
+        }
+
+        public void SetPreviousParagraph(int _pargraphID, Paragraph _previous)
+        {
+            paragraphs[_pargraphID].Previous = _previous;
         }
 
         public int OriginalSize
