@@ -46,7 +46,7 @@ namespace TableTileMapStyle
 
                 amountLetters = int.Parse(_parameters);
 
-                using (StreamReader fileOpen = new StreamReader(TablePath, System.Text.Encoding.Default))
+                using (StreamReader fileOpen = new StreamReader(TablePath, System.Text.Encoding.UTF8))
                 {
                     string line;
                     string[] parsedLine;
