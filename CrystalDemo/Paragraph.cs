@@ -8,7 +8,7 @@ namespace Crystal
 {
     class Paragraph
     {
-        public string ParagraphName { get; }
+        public string Name { get; set; }
 
         public Pointer originalPointer;
 
@@ -36,7 +36,7 @@ namespace Crystal
 
         public Paragraph(string _name, int _originaTextlOffset, int _originalPointerOffset, int _newTextOffset, int _newPointerOffset)
         {
-            ParagraphName = _name;
+            Name = _name;
             Next = null;
             OriginalTextOffset = _originaTextlOffset;
             originalPointer = new Pointer(_originalPointerOffset, 2);
@@ -63,7 +63,5 @@ namespace Crystal
         {
             get { return NewTextOffset + NewBytes.Count - 1; }
         }
-
-        //public Pointer NewPointer { }
     }
 }

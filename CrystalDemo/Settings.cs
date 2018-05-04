@@ -15,6 +15,9 @@ namespace Crystal
 
         public string TraslatedROMPath { set; get; }
 
+        public string ProjectPath { set; get; }
+
+
         public Dictionary<string, string> TablePluginList = new Dictionary<string, string>();
 
         public Dictionary<string, string> PointerPluginList = new Dictionary<string, string>();

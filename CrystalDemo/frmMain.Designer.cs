@@ -36,6 +36,8 @@
             this.openProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -46,6 +48,8 @@
             this.txtOriginal = new FastColoredTextBoxNS.FastColoredTextBox();
             this.txtNew = new FastColoredTextBoxNS.FastColoredTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnRevertNewText = new System.Windows.Forms.Button();
+            this.btnSaveNewText = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtTextAnalizerCollection = new System.Windows.Forms.TextBox();
@@ -53,6 +57,10 @@
             this.txtTextAnalizerAmount = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtLength = new System.Windows.Forms.TextBox();
+            this.openProject = new System.Windows.Forms.OpenFileDialog();
+            this.saveProject = new System.Windows.Forms.SaveFileDialog();
+            this.saveScript = new System.Windows.Forms.SaveFileDialog();
+            this.importScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -80,6 +88,9 @@
             this.openProjectToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.exportScriptToolStripMenuItem,
+            this.importScriptToolStripMenuItem,
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -89,36 +100,51 @@
             // newProjectToolStripMenuItem
             // 
             this.newProjectToolStripMenuItem.Name = "newProjectToolStripMenuItem";
-            this.newProjectToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.newProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newProjectToolStripMenuItem.Text = "New Project...";
             // 
             // openProjectToolStripMenuItem
             // 
             this.openProjectToolStripMenuItem.Name = "openProjectToolStripMenuItem";
-            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.openProjectToolStripMenuItem.Text = "Open Project";
+            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openProjectToolStripMenuItem.Text = "Open Project...";
+            this.openProjectToolStripMenuItem.Click += new System.EventHandler(this.openProjectToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save Project";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Save Project as...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // exportScriptToolStripMenuItem
+            // 
+            this.exportScriptToolStripMenuItem.Name = "exportScriptToolStripMenuItem";
+            this.exportScriptToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportScriptToolStripMenuItem.Text = "Export Script...";
+            this.exportScriptToolStripMenuItem.Click += new System.EventHandler(this.exportScriptToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(158, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // groupBox1
@@ -188,6 +214,7 @@
             this.txtOriginal.CharWidth = 8;
             this.txtOriginal.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtOriginal.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.txtOriginal.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.txtOriginal.IsReplaceMode = false;
             this.txtOriginal.Location = new System.Drawing.Point(7, 19);
             this.txtOriginal.Name = "txtOriginal";
@@ -221,6 +248,7 @@
             this.txtNew.CharWidth = 8;
             this.txtNew.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtNew.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.txtNew.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.txtNew.IsReplaceMode = false;
             this.txtNew.Location = new System.Drawing.Point(7, 261);
             this.txtNew.Name = "txtNew";
@@ -237,6 +265,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.btnRevertNewText);
+            this.groupBox4.Controls.Add(this.btnSaveNewText);
             this.groupBox4.Controls.Add(this.btnImport);
             this.groupBox4.Location = new System.Drawing.Point(719, 416);
             this.groupBox4.Name = "groupBox4";
@@ -245,11 +275,31 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Actions";
             // 
+            // btnRevertNewText
+            // 
+            this.btnRevertNewText.Location = new System.Drawing.Point(92, 19);
+            this.btnRevertNewText.Name = "btnRevertNewText";
+            this.btnRevertNewText.Size = new System.Drawing.Size(79, 23);
+            this.btnRevertNewText.TabIndex = 6;
+            this.btnRevertNewText.Text = "Revert Text";
+            this.btnRevertNewText.UseVisualStyleBackColor = true;
+            this.btnRevertNewText.Click += new System.EventHandler(this.btnRevertNewText_Click);
+            // 
+            // btnSaveNewText
+            // 
+            this.btnSaveNewText.Location = new System.Drawing.Point(6, 48);
+            this.btnSaveNewText.Name = "btnSaveNewText";
+            this.btnSaveNewText.Size = new System.Drawing.Size(79, 23);
+            this.btnSaveNewText.TabIndex = 5;
+            this.btnSaveNewText.Text = "Save Text";
+            this.btnSaveNewText.UseVisualStyleBackColor = true;
+            this.btnSaveNewText.Click += new System.EventHandler(this.btnSaveNewText_Click);
+            // 
             // btnImport
             // 
             this.btnImport.Location = new System.Drawing.Point(6, 19);
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(82, 23);
+            this.btnImport.Size = new System.Drawing.Size(80, 23);
             this.btnImport.TabIndex = 4;
             this.btnImport.Text = "Import Text";
             this.btnImport.UseVisualStyleBackColor = true;
@@ -271,7 +321,7 @@
             // 
             // txtTextAnalizerCollection
             // 
-            this.txtTextAnalizerCollection.Location = new System.Drawing.Point(7, 74);
+            this.txtTextAnalizerCollection.Location = new System.Drawing.Point(7, 71);
             this.txtTextAnalizerCollection.Multiline = true;
             this.txtTextAnalizerCollection.Name = "txtTextAnalizerCollection";
             this.txtTextAnalizerCollection.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -309,6 +359,20 @@
             this.txtLength.Name = "txtLength";
             this.txtLength.Size = new System.Drawing.Size(141, 20);
             this.txtLength.TabIndex = 12;
+            // 
+            // openProject
+            // 
+            this.openProject.Title = "Opening Project...";
+            // 
+            // saveProject
+            // 
+            this.saveProject.Title = "Saving Project";
+            // 
+            // importScriptToolStripMenuItem
+            // 
+            this.importScriptToolStripMenuItem.Name = "importScriptToolStripMenuItem";
+            this.importScriptToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importScriptToolStripMenuItem.Text = "Import Script...";
             // 
             // frmMain
             // 
@@ -364,6 +428,14 @@
         private System.Windows.Forms.TextBox txtTextAnalizerCollection;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtTextAnalizerAmount;
+        private System.Windows.Forms.Button btnSaveNewText;
+        private System.Windows.Forms.OpenFileDialog openProject;
+        private System.Windows.Forms.Button btnRevertNewText;
+        private System.Windows.Forms.SaveFileDialog saveProject;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem exportScriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importScriptToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveScript;
     }
 }
 

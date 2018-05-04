@@ -9,9 +9,25 @@ namespace Crystal
 {
     class Page
     {
-        public string PageName { get; }
+        public string Name { get; }
 
         public List<Paragraph> paragraphs = new List<Paragraph>();
+
+        public string PointerPluginName { get; set; }
+
+        public string PointerPluginParameters { get; set; }
+
+        public string TablePluginName { get; set; }
+
+        public string TablePluginParameters { get; set; }
+
+        public string StoreMethodPluginName { get; set; }
+
+        public string StoreMethodPluginParameters { get; set; }
+
+        public string OriginalTablePath { set; get; }
+
+        public string NewTablePath { set; get; }
 
         public IPointer pointer;
 
@@ -21,29 +37,37 @@ namespace Crystal
 
         public ITable newTable;
 
-        private int originalSize;
-
-        private int newSize;
-
-        public bool IsLinked {
-            get;
-            set; }
+        public bool IsLinked { get; set; }
 
         public Page() { }
 
         public Page(string _name,
             bool _isLinked,
-            IPointer _pointerPlugin,
-            IStoreMethod _storeMethodPlugin,
-            ITable _originalTablePlugin,
-            ITable _newTablePlugin)
+            string _originalTablePath,
+            string _newTablePath,
+            string _pointerPluginName,
+            string _pointerPluginParameters,
+            string _tablePluginName,
+            string _tablePluginParameters,
+            string _storeMethodPluginName,
+            string _storeMethodPluginParameters)
         {
-            PageName = _name;
+            Name = _name;
             IsLinked = _isLinked;
-            pointer = _pointerPlugin;
-            storeMethod = _storeMethodPlugin;
-            originalTable = _originalTablePlugin;
-            newTable = _newTablePlugin;
+            TablePluginName = _tablePluginName;
+            TablePluginParameters = _tablePluginParameters;
+            StoreMethodPluginName = _storeMethodPluginName;
+            StoreMethodPluginParameters = _storeMethodPluginParameters;
+            OriginalTablePath = _originalTablePath;
+            NewTablePath = _newTablePath;
+
+            pointer = null;
+            storeMethod = storeMethod = (IStoreMethod)Plugins
+                .Load(Program.settings.StorePluginList[StoreMethodPluginName], typeof(IStoreMethod), new string[] { StoreMethodPluginParameters });
+            originalTable = (ITable)Plugins
+                .Load(Program.settings.TablePluginList[TablePluginName], typeof(ITable), new string[] { _originalTablePath, TablePluginParameters });
+            newTable = (ITable)Plugins
+                .Load(Program.settings.TablePluginList[TablePluginName], typeof(ITable), new string[] { _newTablePath, TablePluginParameters });
         }
 
         public void AddParagraph(string _name,
@@ -51,14 +75,15 @@ namespace Crystal
             int _originalPointerOffset)
         {
             paragraphs.Add(new Paragraph(_name, _originaTextlOffset, _originalPointerOffset));
-            GetOriginalBytes(paragraphs.Count - 1);
-            GetNewBytes(paragraphs.Count - 1);
+            GetOriginalText(paragraphs.Count - 1);
+            GetNewText(paragraphs.Count - 1);
             if (IsLinked == true)
             {
                 if (paragraphs.Count > 1)
                 {
                     SetNextParagraph(paragraphs.Count - 2, paragraphs[paragraphs.Count - 1]);
-                } else
+                }
+                else
                 {
                     SetNextParagraph(paragraphs.Count - 1, null);
                 }
@@ -73,11 +98,12 @@ namespace Crystal
             int _originaTextlOffset,
             int _originalPointerOffset,
             int _newTextOffset,
-            int _newPointerOffset)
+            int _newPointerOffset,
+            string _text)
         {
             paragraphs.Add(new Paragraph(_name, _originaTextlOffset, _originalPointerOffset, _newTextOffset, _newPointerOffset));
-            GetOriginalBytes(paragraphs.Count - 1);
-            GetNewBytes(paragraphs.Count - 1);
+            GetOriginalText(paragraphs.Count - 1);
+
             if (IsLinked == true)
             {
                 if (paragraphs.Count > 1)
@@ -89,6 +115,7 @@ namespace Crystal
                     SetPreviousParagraph(paragraphs.Count - 1, paragraphs[paragraphs.Count - 2]);
                 }
             }
+            SetNewText(paragraphs.Count - 1, _text);
         }
 
         public void GetOriginalBytes(int _paragraphID)
@@ -135,10 +162,11 @@ namespace Crystal
             string _text)
         {
             SetNewText(_pargraphID, _text);
-            if(IsLinked == false)
+            if (IsLinked == false)
             {
                 storeMethod.InsertBytes(paragraphs[_pargraphID].NewTextOffset, Program.settings.TraslatedROMPath, paragraphs[_pargraphID].NewBytes);
-            } else
+            }
+            else
             {
                 Paragraph paragraph = paragraphs[_pargraphID];
                 do

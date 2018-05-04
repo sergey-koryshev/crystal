@@ -9,9 +9,9 @@ namespace Crystal
 {
     class Pointer
     {
-        private int Offset { set; get; }
+        public int Offset { set; get; }
 
-        private int CountBytes { get; set; }
+        public int CountBytes { get; set; }
 
         public Pointer() { }
 

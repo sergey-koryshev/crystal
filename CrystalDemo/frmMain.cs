@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Crystal
 {
@@ -21,40 +22,12 @@ namespace Crystal
         private void frmMain_Load(object sender, EventArgs e)
         {
             Program.settings = new Settings();
-
-            Program.book = new Book("Castlevania: Legends (GBC)");
-
-            Program.book.AddPage("Dialogs", true, @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\Dialogs.tbl", "", "", "Basic Table", "", "Stop-Byte Store Method", "255");
-            Program.book.pages[0].AddParagraph("Alucard and Sonia (before the fight)", 0x24cb9, 0x24524);
-            Program.book.pages[0].AddParagraph("Alucard and Sonia (after the fight)", 0x2516f, 0x24553);
-            Program.book.pages[0].AddParagraph("Dracula (before the first form)", 0x2536A, 0x24582);
-            Program.book.pages[0].AddParagraph("Dracula (after the fight)", 0x2570B, 0x245B1);
-            Program.book.pages[0].AddParagraph("Dracual (before the second form)", 0x25C4D, 0x245E0);
-
-            Program.book.AddPage("History", false, @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen.tbl", @"D:\YandexDisk\Romhacking\Translations\03. Castlevania. Legends\Tables\History_screen (rus).tbl", "", "", "Tile Map Table", "20", "Tile-Map Store Method", "20;20");
-            Program.book.pages[1].AddParagraph("History", 0x6292, 0x1661);
-
-            TreeNode addingBook = new TreeNode(Program.book.BookName);
-            addingBook.Tag = "Book";
-            treeProject.Nodes.Add(addingBook);
-
-            foreach (Page page in Program.book.pages)
-            {
-                TreeNode addingPage = new TreeNode(page.PageName);
-                addingPage.Tag = "Page";
-                addingBook.Nodes.Add(addingPage);
-                foreach (Paragraph paragraph in page.paragraphs)
-                {
-                    TreeNode addingParagraph = new TreeNode(paragraph.ParagraphName);
-                    addingParagraph.Tag = "Paragraph";
-                    addingPage.Nodes.Add(addingParagraph);
-                }
-            }
         }
 
         private void treeProject_AfterSelect(object sender, TreeViewEventArgs e)
         {
             txtOriginal.Clear();
+            txtNew.Clear();
             StringBuilder originalText;
             StringBuilder newText;
             switch (treeProject.SelectedNode.Tag)
@@ -72,6 +45,16 @@ namespace Crystal
                     break;
                 case "Page":
                     propertyGrid1.SelectedObject = Program.book.pages[treeProject.SelectedNode.Index];
+
+                    StringBuilder text = new StringBuilder();
+
+                    foreach (Paragraph paragraph in Program.book.pages[treeProject.SelectedNode.Index].paragraphs)
+                    {
+                        text.Append(paragraph.NewText);
+                    }
+
+                    Analize(Regex.Replace(text.ToString(), "[[{].*[}]]|[\r\n]", ""));
+
                     break;
                 case "Book":
                     propertyGrid1.SelectedObject = Program.book;
@@ -86,7 +69,7 @@ namespace Crystal
         {
             int result = 0;
             int i = 0;
-            StringBuilder text = new StringBuilder(Regex.Replace(_text, @"\n+", ""));
+            StringBuilder text = new StringBuilder(Regex.Replace(_text, @"\r\n", ""));
 
             while (i < text.Length)
             {
@@ -159,14 +142,16 @@ namespace Crystal
 
         private void txtNew_TextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
         {
+            
+            Analize(Regex.Replace(Regex.Replace(txtNew.Text, "·", " "), "[[{].*[}]]|[\r\n]", ""));
+        }
+
+        private void Analize(string _text)
+        {
             txtTextAnalizerAmount.Clear();
             txtTextAnalizerCollection.Clear();
 
-            StringBuilder text = new StringBuilder(Regex.Replace(Regex.Replace(txtNew.Text, "·", " "), "[{].*[}]", ""));
-
-            
-
-            FrequencyAnalysis fa = new FrequencyAnalysis(text.ToString());
+            FrequencyAnalysis fa = new FrequencyAnalysis(_text);
 
             fa.Analise();
 
@@ -174,10 +159,10 @@ namespace Crystal
 
             foreach (var c in fa)
             {
-                
+
                 if (c.Key == ' ')
                 {
-                    txtTextAnalizerCollection.AppendText(string.Format("пробел({0}) ", c.Value));
+                    txtTextAnalizerCollection.AppendText(string.Format("space({0}) ", c.Value));
                 }
                 else
                 {
@@ -189,6 +174,95 @@ namespace Crystal
         private void propertyGrid1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSaveNewText_Click(object sender, EventArgs e)
+        {
+            StringBuilder text = new StringBuilder(Regex.Replace(txtNew.Text, @"·", " "));
+
+            Program.book.SetNewText(treeProject.SelectedNode.Parent.Index, treeProject.SelectedNode.Index, text.ToString());
+
+        }
+
+        private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openProject.ShowDialog();
+
+            if(openProject.FileName != "")
+            {
+                Program.settings.ProjectPath = openProject.FileName;
+                Project.OpenProject(Program.settings.ProjectPath);
+                UpdateTree();
+            }
+        }
+
+        private void UpdateTree()
+        {
+            TreeNode addingBook = new TreeNode(Program.book.Name);
+            addingBook.Tag = "Book";
+            treeProject.Nodes.Add(addingBook);
+
+            foreach (Page page in Program.book.pages)
+            {
+                TreeNode addingPage = new TreeNode(page.Name);
+                addingPage.Tag = "Page";
+                addingBook.Nodes.Add(addingPage);
+                foreach (Paragraph paragraph in page.paragraphs)
+                {
+                    TreeNode addingParagraph = new TreeNode(paragraph.Name);
+                    addingParagraph.Tag = "Paragraph";
+                    addingPage.Nodes.Add(addingParagraph);
+                }
+            }
+        }
+
+        private void btnRevertNewText_Click(object sender, EventArgs e)
+        {
+            Program.book.RevertNewText(treeProject.SelectedNode.Parent.Index, treeProject.SelectedNode.Index);
+
+            StringBuilder newText = new StringBuilder(Regex.Replace(Program.book.ExportNewText(treeProject.SelectedNode.Parent.Index, treeProject.SelectedNode.Index), @"[\s-[\r\n]]", "·"));
+
+            txtNew.Text = newText.ToString();
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveProject.ShowDialog();
+
+            if (saveProject.FileName != null)
+            {
+                Project.SaveProject(saveProject.FileName);
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.settings.ProjectPath != "")
+            {
+                Project.SaveProject(Program.settings.ProjectPath);
+            }
+        }
+
+        private void exportScriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveScript.ShowDialog();
+
+            if (saveScript.FileName != "")
+            {
+                using (StreamWriter file = new StreamWriter(saveScript.FileName, false, System.Text.Encoding.UTF8))
+                {
+                    foreach (Page page in Program.book.pages)
+                    {
+                        foreach (Paragraph paragraph in page.paragraphs)
+                        {
+                            file.WriteLine(String.Format("@{0}", paragraph.Name));
+                            file.WriteLine(paragraph.NewText);
+                            file.WriteLine("@");
+                            file.WriteLine();
+                        }
+                    }
+                }
+            }
         }
     }
 }

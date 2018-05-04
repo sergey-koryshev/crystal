@@ -9,7 +9,7 @@ namespace Crystal
 {
     class Book
     {
-        public string BookName { get; }
+        public string Name { get; set; }
 
         public List<Page> pages = new List<Page> { };
 
@@ -17,10 +17,10 @@ namespace Crystal
 
         public Book(string _name)
         {
-            BookName = _name;
+            Name = _name;
         }
 
-        public void AddPage(string _name,
+        public Page AddPage(string _name,
             bool _isLinked,
             string _originalTablePath,
             string _newTablePath,
@@ -32,18 +32,10 @@ namespace Crystal
             string _storeMethodPluginParameters
             )
         {
-            IPointer pointer = null;
 
-            ITable originalTable = (ITable)Plugins
-                .Load(Program.settings.TablePluginList[_tablePluginName], typeof(ITable), new string[] { _originalTablePath, _tablePluginParameters });
+            pages.Add(new Page(_name, _isLinked, _originalTablePath, _newTablePath, _pointerPluginName, _pointerPluginParameters, _tablePluginName, _tablePluginParameters, _storeMethodPluginName, _storeMethodPluginParameters));
 
-            ITable newTable = (ITable)Plugins
-                .Load(Program.settings.TablePluginList[_tablePluginName], typeof(ITable), new string[] { _newTablePath, _tablePluginParameters });
-
-            IStoreMethod storeMethod = (IStoreMethod)Plugins
-                .Load(Program.settings.StorePluginList[_storeMethodPluginName], typeof(IStoreMethod), new string[] { _storeMethodPluginParameters });
-
-            pages.Add(new Page(_name, _isLinked, pointer, storeMethod, originalTable, newTable));
+            return pages[pages.Count - 1];
         }
 
         public string ExportOriginalText(int _pageID,
@@ -56,12 +48,20 @@ namespace Crystal
             return result;
         }
 
-        public string ExportNewText(int _pageID,
+        public string RevertNewText(int _pageID,
             int _paragraphID
             )
         {
             string result = string.Empty;
             pages[_pageID].GetNewText(_paragraphID);
+            result = pages[_pageID].paragraphs[_paragraphID].NewText;
+            return result;
+        }
+
+        public string ExportNewText(int _pageID,
+            int _paragraphID)
+        {
+            string result = string.Empty;
             result = pages[_pageID].paragraphs[_paragraphID].NewText;
             return result;
         }
