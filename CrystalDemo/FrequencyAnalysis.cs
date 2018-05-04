@@ -11,7 +11,7 @@ namespace Crystal
     {
         private string originalText;
 
-        private Dictionary<char, int> Letters;
+        private SortedDictionary<char, int> Letters;
 
         public FrequencyAnalysis() { }
 
@@ -22,7 +22,7 @@ namespace Crystal
 
         public void Analise ()
         {
-            Letters = new Dictionary<char, int>();
+            Letters = new SortedDictionary<char, int>();
 
             foreach (char c in originalText)
             {
