@@ -14,6 +14,8 @@ namespace BasicTable
         {
             private Dictionary<byte, string> table;
 
+            public string Path { get; }
+
             public string Name { get; }
 
             public string Description { get; }
@@ -38,13 +40,15 @@ namespace BasicTable
                 IsDefault = true;
             }
 
-            public Table(string TablePath, string _parameters)
+            public Table(string _tablePath, string _parameters)
             {
                 try
                 {
                     table = new Dictionary<byte, string>();
 
-                    using (StreamReader fileOpen = new StreamReader(TablePath, System.Text.Encoding.UTF8))
+                    Path = _tablePath;
+
+                    using (StreamReader fileOpen = new StreamReader(Path, System.Text.Encoding.UTF8))
                     {
                         string line;
                         string[] parsedLine;

@@ -10,6 +10,8 @@ namespace Interfaces
     {
         string Parameters { get; }
 
+        string Path { get; }
+
         string ToString(List<byte> _intArray);
 
         List<byte> ToHex(string _stringArray);

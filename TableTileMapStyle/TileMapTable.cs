@@ -12,6 +12,8 @@ namespace TableTileMapStyle
     {
         private Dictionary<byte, string> table;
 
+        public string Path {get;}
+
         public string Description { get; }
 
         public string Name { get; }
@@ -38,15 +40,17 @@ namespace TableTileMapStyle
             IsDefault = true;
         }
 
-        public TileMapTable(string TablePath, string _parameters)
+        public TileMapTable(string _tablePath, string _parameters)
         {
             try
             {
                 table = new Dictionary<byte, string>();
 
+                Path = _tablePath;
+
                 amountLetters = int.Parse(_parameters);
 
-                using (StreamReader fileOpen = new StreamReader(TablePath, System.Text.Encoding.UTF8))
+                using (StreamReader fileOpen = new StreamReader(Path, System.Text.Encoding.UTF8))
                 {
                     string line;
                     string[] parsedLine;
