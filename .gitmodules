@@ -1,0 +1,3 @@
+[submodule "CrystalDemo/crystal-interfaces"]
+	path = CrystalDemo/crystal-interfaces
+	url = https://github.com/Ace-Lightning/crystal-interfaces
