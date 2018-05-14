@@ -35,10 +35,6 @@
       <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Interfaces">
-      <HintPath>..\Plugins\Interfaces.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddingPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddingPage.Designer.cs">
+      <DependentUpon>AddingPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Book.cs" />
     <Compile Include="FrequencyAnalysis.cs" />
     <Compile Include="frmMain.cs">
@@ -67,8 +69,17 @@
     <Compile Include="Program.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectingPlugin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectingPlugin.Designer.cs">
+      <DependentUpon>SelectingPlugin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Xml.cs" />
+    <EmbeddedResource Include="AddingPage.resx">
+      <DependentUpon>AddingPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,6 +92,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SelectingPlugin.resx">
+      <DependentUpon>SelectingPlugin.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -99,6 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\crystal-interfaces\Interfaces.csproj">
+      <Project>{e5898ad9-b2d8-4607-b772-63fdb876f4da}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
