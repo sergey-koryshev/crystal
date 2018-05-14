@@ -62,7 +62,7 @@ namespace Crystal
             NewTablePath = _newTablePath;
 
             pointer = null;
-            storeMethod = storeMethod = (IStoreMethod)Plugins
+            storeMethod = (IStoreMethod)Plugins
                 .Load(Program.settings.StorePluginList[StoreMethodPluginName], typeof(IStoreMethod), new string[] { StoreMethodPluginParameters });
             originalTable = (ITable)Plugins
                 .Load(Program.settings.TablePluginList[TablePluginName], typeof(ITable), new string[] { _originalTablePath, TablePluginParameters });
