@@ -38,5 +38,14 @@ namespace Crystal
 
             StorePluginList = Plugins.Check(PluginsFolder, typeof(IStoreMethod));
         }
+
+        public void Update()
+        {
+            TablePluginList = Plugins.Check(PluginsFolder, typeof(ITable));
+
+            PointerPluginList = Plugins.Check(PluginsFolder, typeof(IPointer));
+
+            StorePluginList = Plugins.Check(PluginsFolder, typeof(IStoreMethod));
+        }
     }
 }

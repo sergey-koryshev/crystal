@@ -22,6 +22,8 @@ namespace Crystal
         private void frmMain_Load(object sender, EventArgs e)
         {
             Program.settings = new Settings();
+            //AddingPage c = new AddingPage();
+            //c.ShowDialog();
         }
 
         private void treeProject_AfterSelect(object sender, TreeViewEventArgs e)
@@ -198,6 +200,8 @@ namespace Crystal
 
         private void UpdateTree()
         {
+            treeProject.Nodes.Clear();
+
             TreeNode addingBook = new TreeNode(Program.book.Name);
             addingBook.Tag = "Book";
             treeProject.Nodes.Add(addingBook);
@@ -263,6 +267,45 @@ namespace Crystal
                     }
                 }
             }
+        }
+
+        private void contextMenuProjectTree_Opening(object sender, CancelEventArgs e)
+        {
+            if (treeProject.SelectedNode != null)
+            {
+                switch (treeProject.SelectedNode.Tag.ToString())
+                {
+                    case "Book":
+                        contextMenuProjectTree.Items[0].Enabled = true;
+                        contextMenuProjectTree.Items[1].Enabled = false;
+                        contextMenuProjectTree.Items[2].Enabled = true;
+                        break;
+                    case "Page":
+                        contextMenuProjectTree.Items[0].Enabled = false;
+                        contextMenuProjectTree.Items[1].Enabled = true;
+                        contextMenuProjectTree.Items[2].Enabled = true;
+                        break;
+                    case "Paragraph":
+                        contextMenuProjectTree.Items[0].Enabled = false;
+                        contextMenuProjectTree.Items[1].Enabled = false;
+                        contextMenuProjectTree.Items[2].Enabled = true;
+                        break;
+                }
+            } else
+            {
+                contextMenuProjectTree.Items[0].Enabled = false;
+                contextMenuProjectTree.Items[1].Enabled = false;
+                contextMenuProjectTree.Items[2].Enabled = false;
+            }
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (AddingPage addPageFrom = new AddingPage(treeProject.SelectedNode.Index))
+            {
+                addPageFrom.ShowDialog();
+            }
+            UpdateTree();
         }
     }
 }
